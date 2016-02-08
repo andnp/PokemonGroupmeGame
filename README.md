@@ -12,5 +12,6 @@ Where ```access_token``` is the access token given by groupme, and ```bot_id``` 
 
 Next users should run:
 ```npm install
+
 node game.js```
 to run the game.
