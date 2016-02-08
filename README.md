@@ -11,7 +11,5 @@ This file should look like:
 Where ```access_token``` is the access token given by groupme, and ```bot_id``` is the id of the bot created in the groupme developer bot panel.
 
 Next users should run:
-```npm install
-
-node game.js```
+```npm install && node game.js```
 to run the game.
