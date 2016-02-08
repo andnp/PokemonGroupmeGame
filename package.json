@@ -1,0 +1,10 @@
+{
+  "name": "ChapterBotServer",
+  "version": "0.0.0",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "groupme": "^0.5.7",
+    "webdriverio": "^3.4.0"
+  }
+}
