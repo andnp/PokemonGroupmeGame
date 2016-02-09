@@ -169,7 +169,7 @@ function parseCommand(text, user){
 			messenger.post(str);
 		}
 	} else if(utils.isIn(names, text) && !utils.isIn(gameObject.guessed, user) && gameObject.running){
-		guessed.push(user);
+		gameObject.guessed.push(user);
 		messenger.post("Nope. Sorry kiddo");
 	} else if(utils.isIn(names, text) && utils.isIn(gameObject.guessed, user) && gameObject.running){
 		var str = "Sorry " + user + ", but you've already had your guess for this round, and you were wrong.";
