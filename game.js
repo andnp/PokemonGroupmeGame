@@ -57,7 +57,6 @@ function printScores(score){
 }
 
 function exec(game){
-	console.log(game);
 	if(!game.running) return;
 	if(game.gameState == 0){
 		game.num = Math.round((Math.random() * ((game.maxPoke - game.minPoke) - 1)) + game.minPoke);
@@ -113,8 +112,6 @@ function start(){
 }
 
 function parseCommand(text, user){
-	console.log(text);
-	console.log(user);
 	var data = dataService.getData(gameObject.num);
 	var name = data.name.toLowerCase();
 	if(name == text && !utils.isIn(gameObject.guessed, user) && gameObject.running){
