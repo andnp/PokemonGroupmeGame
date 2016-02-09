@@ -1,3 +1,5 @@
+var messenger = global.DEBUG ? require('../debugMessenger.js') : require('../GroupMe/message.js');
+
 function isIn(arr, num){
 	for(var i = 0; i < arr.length; i++){
 		if(arr[i] == num)
@@ -26,25 +28,32 @@ function getRandomEntries(arr, num){
 	return ret;
 }
 
-function numToZeroString(num){
-	var str = ""+num;
-	if(num < 10)
-		str = "00"+num;
-	else if(num < 100)
-		str = "0"+num;
-
-	return str;
-}
-
 function removeSubstring(str, sub){
 	str = str.toLowerCase().replace(sub, "*******");
 	return str;
+}
+
+function reset(game){
+	clearTimeout(game.to);
+	game.gameState = 0;
+	game.guessed = [];
+	game.to = null;
+	game.running = false;
+}
+
+function printScores(score){
+	var str = "Scores:\n ";
+	for(var key in score){
+		str += key + ": " + score[key] + "\n";
+	}
+	messenger.post(str);
 }
 
 module.exports = {
 	isIn: isIn,
 	getRandomEntry: getRandomEntry,
 	getRandomEntries: getRandomEntries,
-	numToZeroString: numToZeroString,
-	removeSubstring: removeSubstring
+	removeSubstring: removeSubstring,
+	reset: reset,
+	printScores: printScores
 }
