@@ -4,8 +4,8 @@ var ImageService = require('groupme').ImageService;
 
 var utils = require('../Utils/utils.js');
 
-var access_token = JSON.parse(fs.readFileSync("accessKeys.json")).access_token;
-var bot_id = JSON.parse(fs.readFileSync("accessKeys.json")).bot_id;
+var access_token = JSON.parse(fs.readFileSync("./accessKeys.json")).access_token;
+var bot_id = JSON.parse(fs.readFileSync("./accessKeys.json")).bot_id;
 
 function post(str,url){
 	var options = {};
@@ -28,5 +28,6 @@ function postPicture(str, num){
 }
 
 module.exports = {
-	post: post
+	post: post,
+	postPicture, postPicture
 }

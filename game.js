@@ -57,6 +57,7 @@ function printScores(score){
 }
 
 function exec(game){
+	console.log(game);
 	if(!game.running) return;
 	if(game.gameState == 0){
 		game.num = Math.round((Math.random() * ((game.maxPoke - game.minPoke) - 1)) + game.minPoke);
@@ -100,7 +101,7 @@ function exec(game){
 
 function merp(){
 	exec(gameObject);
-	to = setTimeout(merp, time * 60 * 1000);
+	gameObject.to = setTimeout(merp, time * 60 * 1000);
 }
 
 function start(){
@@ -112,10 +113,12 @@ function start(){
 }
 
 function parseCommand(text, user){
+	console.log(text);
+	console.log(user);
 	var data = dataService.getData(gameObject.num);
 	var name = data.name.toLowerCase();
 	if(name == text && !utils.isIn(gameObject.guessed, user) && gameObject.running){
-		clearTimeout(to);
+		clearTimeout(gameObject.to);
 		messenger.post("Good job " + user);
 		gameObject.gameState = 4;
 		increaseScore(gameObject, user);
