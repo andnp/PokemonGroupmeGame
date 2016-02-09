@@ -1,4 +1,6 @@
-var DEBUG = true;
+var DEBUG = false;
+if(process.argv[2] == "--debug")
+	DEBUG = true;
 
 /* Load NPM Modules */
 var express = require('express');
@@ -57,7 +59,6 @@ function exec(game){
 		var data = dataService.getData(game.num);
 		console.log(data.name);
 		var moves = dataService.getAllLevelMoves(data);
-		console.log(moves);
 		moves = dataService.getRandomMoves(moves, 4);
 		var str = "Pokemon moves: ";
 		for(var i = 0; i < moves.length; i++){
