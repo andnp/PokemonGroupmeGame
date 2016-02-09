@@ -1,12 +1,12 @@
 var DEBUG = false;
 var time = .5; // in minutes
-var waitTime = 10; // in seconds
+var waitTime = 15; // in seconds
 
 
 if(process.argv[2] == "--debug"){ // if run with --debug, then run in terminal
 	DEBUG = true;
 	time = .1;
-	waitTime = 1;
+	waitTime = 5;
 }
 
 /* Load NPM Modules */
@@ -97,6 +97,7 @@ function exec(game){
 		messenger.post(desc);
 		game.gameState = 4;
 	} else if(game.gameState == 4){
+		lastEnded = Date.now();
 		clearTimeout(game.to);
 		printScores(game.score);
 		messenger.postPicture(dataService.getData(game.num).name, game.num);
