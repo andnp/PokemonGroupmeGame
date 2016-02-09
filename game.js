@@ -1,10 +1,12 @@
 var DEBUG = false;
-var time = .5;
+var time = .5; // in minutes
+var waitTime = 10; // in seconds
 
 
 if(process.argv[2] == "--debug"){ // if run with --debug, then run in terminal
 	DEBUG = true;
 	time = .1;
+	waitTime = 1;
 }
 
 /* Load NPM Modules */
@@ -22,6 +24,8 @@ var dataService = require('./src/Data/data.js');
 
 var names = dataService.getAllNames();
 var pokemonDescriptions = dataService.getDescriptions();
+
+var lastEnded = Date.now();
 
 var gameObject = {
 	gameState: 0,
@@ -93,6 +97,8 @@ function exec(game){
 		messenger.post(desc);
 		game.gameState = 4;
 	} else if(game.gameState == 4){
+		clearTimeout(game.to);
+		printScores(game.score);
 		messenger.postPicture(dataService.getData(game.num).name, game.num);
 		reset(game);
 	}
@@ -115,11 +121,9 @@ function parseCommand(text, user){
 	var data = dataService.getData(gameObject.num);
 	var name = data.name.toLowerCase();
 	if(name == text && !utils.isIn(gameObject.guessed, user) && gameObject.running){
-		clearTimeout(gameObject.to);
-		messenger.post("Good job " + user);
 		gameObject.gameState = 4;
+		messenger.post("Good job " + user);
 		increaseScore(gameObject, user);
-		printScores(gameObject.score);
 		exec(gameObject);
 	} else if(text == "merpmer"){
 		messenger.post("resetting");
@@ -129,7 +133,7 @@ function parseCommand(text, user){
 		gameObject.score = {};
 	} else if(text == "score"){
 		printScores(gameObject.score);
-	} else if(text.indexOf("start pokebot") > -1 && !gameObject.running){
+	} else if(text.indexOf("start pokebot") > -1 && !gameObject.running && (Date.now() - lastEnded) > waitTime * 1000){
 		var args = text.split("start pokebot")[1];
 		maxPoke = 151;
 		minPoke = 1;
