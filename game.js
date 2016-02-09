@@ -127,6 +127,8 @@ function parseCommand(text, user){
 	} else if(text == "merpmerpmer"){
 		reset(gameObject);
 		gameObject.score = {};
+	} else if(text == "score"){
+		printScores(gameObject.score);
 	} else if(text.indexOf("start pokebot") > -1 && !gameObject.running){
 		var args = text.split("start pokebot")[1];
 		maxPoke = 151;
