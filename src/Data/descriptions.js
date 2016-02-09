@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 function getDescriptions(){
-	var dataStr = fs.readFileSync('../../Data/pokemonDescription/data.json');
+	var dataStr = fs.readFileSync('./Data/pokemonDescription/data.json');
 	var data = JSON.parse(dataStr);
 	return data;
 }

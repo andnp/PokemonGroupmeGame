@@ -4,7 +4,7 @@ var moves = require('./moves.js');
 
 
 function getData(num){
-	var dataStr = fs.readFileSync('../../Data/pokemonData/'+num+'.json');
+	var dataStr = fs.readFileSync('./Data/pokemonData/'+num+'.json');
 	var data = JSON.parse(dataStr);
 	return data;
 }

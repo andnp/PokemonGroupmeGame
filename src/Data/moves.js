@@ -4,7 +4,7 @@ var utils = require('../Utils/utils.js');
 function getMoveData(move){
 	console.log("looking for: " + move);
 	try {
-		var dataStr = fs.readFileSync('../../Data/moveData/' + move + '.json');
+		var dataStr = fs.readFileSync('./Data/moveData/' + move + '.json');
 		var data = JSON.parse(dataStr);
 		return data;
 	} catch(e) {

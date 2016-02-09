@@ -1,3 +1,5 @@
+var DEBUG = true;
+
 /* Load NPM Modules */
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -6,14 +8,14 @@ var app = express();
 app.use(bodyParser.json());
 
 /* Load user modules */
-var messenger = require('./src/GroupMe/message.js');
+var messenger = DEBUG ? require('./src/debugMessenger.js') : require('./src/GroupMe/message.js');
 var utils = require('./src/Utils/utils.js');
 var dataService = require('./src/Data/data.js');
 
 var time = .5;
 
-var names = getAllNames();
-var pokemonDescriptions = getDescriptions();
+var names = dataService.getAllNames();
+var pokemonDescriptions = dataService.getDescriptions();
 
 var gameObject = {
 	gameState: 0,
@@ -55,6 +57,7 @@ function exec(game){
 		var data = dataService.getData(game.num);
 		console.log(data.name);
 		var moves = dataService.getAllLevelMoves(data);
+		console.log(moves);
 		moves = dataService.getRandomMoves(moves, 4);
 		var str = "Pokemon moves: ";
 		for(var i = 0; i < moves.length; i++){
@@ -95,21 +98,20 @@ function merp(){
 }
 
 function start(){
-	console.log("starting");
 	var str = "Welcome to the game. I will post a new hint every " + time + " minutes with 4 total hints. You get one guess. Make sure to spell it right :)";
 	messenger.post(str);
-	reset();
-	running = true;
+	reset(gameObject);
+	gameObject.running = true;
 	merp();
 }
 
 function parseCommand(text, user){
-	var data = dataService.getData(num);
+	var data = dataService.getData(gameObject.num);
 	var name = data.name.toLowerCase();
-	if(name == text && !utils.isIn(guessed, user) && gameObject.running){
+	if(name == text && !utils.isIn(gameObject.guessed, user) && gameObject.running){
 		clearTimeout(to);
 		messenger.post("Good job " + user);
-		game.gameState = 4;
+		gameObject.gameState = 4;
 		increaseScore(gameObject, user);
 		printScores(gameObject.score);
 		exec(gameObject);
@@ -155,23 +157,39 @@ function parseCommand(text, user){
 			var str = "Couldn't find it, sorry!";
 			messenger.post(str);
 		}
-	} else if(utils.isIn(names, text) && !utils.isIn(guessed, user) && gameObject.running){
+	} else if(utils.isIn(names, text) && !utils.isIn(gameObject.guessed, user) && gameObject.running){
 		guessed.push(user);
 		messenger.post("Nope. Sorry kiddo");
-	} else if(utils.isIn(names, text) && utils.isIn(guessed, user) && running){
+	} else if(utils.isIn(names, text) && utils.isIn(gameObject.guessed, user) && gameObject.running){
 		var str = "Sorry " + user + ", but you've already had your guess for this round, and you were wrong.";
 		messenger.post(str);
-	} else if(to == null){
+	} else if(gameObject.to == null){
 		reset(gameObject);
 	}
 }
 
-app.post('/pokemon', function(req, res){
-	var body = req.body;
-	var text = body.text.toLowerCase();
-	var user = body.name;
-	parseCommand(text, user);
-});
+if(!DEBUG){
+	app.post('/pokemon', function(req, res){
+		var body = req.body;
+		var text = body.text.toLowerCase();
+		var user = body.name;
+		parseCommand(text, user);
+	});
 
-var server = app.listen(3000, function(){
-});
+	var server = app.listen(3000, function(){
+	});
+} else {
+	process.stdin.setEncoding('utf8');
+
+	var input = "";
+	process.stdin.on('readable', function() {
+	 	input = process.stdin.read();
+	 	if(input != "" && input != null){
+	 		input = input.substring(0, input.length - 1);
+	 		parseCommand(input, "me");
+	 	}
+	});
+
+	process.stdin.on('end', function(){
+	});
+}

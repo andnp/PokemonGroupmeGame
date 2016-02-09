@@ -16,7 +16,7 @@ function getRandomEntries(arr, num){
 	if(arr.length < num)
 		throw new Error('Wanted: ' + num + ' random entries, but only have: ' + arr.length + ' entries');
 	for(var i = 0; i < num; i++){
-		var entry = getRandomEntry();
+		var entry = getRandomEntry(arr);
 		if(isIn(ret, entry)) {
 			i--;
 		} else {

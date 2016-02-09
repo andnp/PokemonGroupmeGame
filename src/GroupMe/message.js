@@ -20,7 +20,7 @@ function post(str,url){
 function postPicture(str, num){
 	var numstr = utils.numToZeroString(num);
 	ImageService.post(
-	"pokemon/" + numstr +".png",
+	"./Data/pokemon/" + numstr +".png",
 	function(err, res){
 		if(err) throw(err);
 		post(str, res.picture_url);
