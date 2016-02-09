@@ -1,6 +1,11 @@
 var DEBUG = false;
-if(process.argv[2] == "--debug")
+var time = .5;
+
+
+if(process.argv[2] == "--debug"){ // if run with --debug, then run in terminal
 	DEBUG = true;
+	time = .1;
+}
 
 /* Load NPM Modules */
 var express = require('express');
@@ -14,7 +19,6 @@ var messenger = DEBUG ? require('./src/debugMessenger.js') : require('./src/Grou
 var utils = require('./src/Utils/utils.js');
 var dataService = require('./src/Data/data.js');
 
-var time = .5;
 
 var names = dataService.getAllNames();
 var pokemonDescriptions = dataService.getDescriptions();
@@ -85,6 +89,7 @@ function exec(game){
 		var data = dataService.getData(game.num);
 		var name = data.name;
 		var desc = dataService.getRandomDescription(name, pokemonDescriptions);
+		desc = utils.removeSubstring(desc, name.toLowerCase());
 		messenger.post(desc);
 		game.gameState = 4;
 	} else if(game.gameState == 4){

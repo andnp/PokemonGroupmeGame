@@ -36,9 +36,15 @@ function numToZeroString(num){
 	return str;
 }
 
+function removeSubstring(str, sub){
+	str = str.toLowerCase().replace(sub, "*******");
+	return str;
+}
+
 module.exports = {
 	isIn: isIn,
 	getRandomEntry: getRandomEntry,
 	getRandomEntries: getRandomEntries,
-	numToZeroString: numToZeroString
+	numToZeroString: numToZeroString,
+	removeSubstring: removeSubstring
 }
