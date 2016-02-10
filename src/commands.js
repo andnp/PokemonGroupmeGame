@@ -17,7 +17,11 @@ function hasGuessed(user, game){
 }
 
 function canStart(game){
-	return !game.running && (Date.now() - lastEnded) > global.waitTime * 1000;
+	var seconds = Math.floor((Date.now() - lastEnded) / 1000);
+	if(seconds < global.waitTime){
+		messenger.post("Please wait " + (global.waitTime - seconds) + " seconds then try again");
+	}
+	return !game.running && seconds > global.waitTime;
 }
 
 function secondGuess(user){
