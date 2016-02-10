@@ -1,5 +1,6 @@
 var messenger = global.DEBUG ? require('./debugMessenger.js') : require('./GroupMe/message.js');
 var gsm = require('./gameStateMachine.js');
+var dataService = require('./Data/data.js');
 var utils = require('./Utils/utils.js');
 
 /* Helper Methods */
