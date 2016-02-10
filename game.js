@@ -40,6 +40,8 @@ function isValidPokemon(name){
 }
 
 function parseCommand(text, user){
+	if(text.substring(text.length - 1) == " ")
+		text = text.substring(text.length - 1);
 	var data = dataService.getData(gameObject.num);
 	var name = data.name.toLowerCase();
 	if(name == text){

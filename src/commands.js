@@ -54,42 +54,42 @@ function printScores(game){
 }
 
 function startGen1(game){
-	if(!canStart) return;
+	if(!canStart(game)) return;
 	game.maxPoke = 151;
 	game.minPoke = 1; 
 	gsm.start(game);
 }
 
 function startGen2(game){
-	if(!canStart) return;
+	if(!canStart(game)) return;
 	game.maxPoke = 251;
 	game.minPoke = 152; 
 	gsm.start(game);
 }
 
 function startGen3(game){
-	if(!canStart) return;
+	if(!canStart(game)) return;
 	game.maxPoke = 386;
 	game.minPoke = 252; 
 	gsm.start(game);
 }
 
 function startGen4(game){
-	if(!canStart) return;
+	if(!canStart(game)) return;
 	game.maxPoke = 493;
 	game.minPoke = 387; 
 	gsm.start(game);
 }
 
 function startGen5(game){
-	if(!canStart) return;
+	if(!canStart(game)) return;
 	game.maxPoke = 649;
 	game.minPoke = 494; 
 	gsm.start(game);
 }
 
 function startGen6(game){
-	if(!canStart) return;
+	if(!canStart(game)) return;
 	game.maxPoke = 718;
 	game.minPoke = 650; 
 	gsm.start(game);
