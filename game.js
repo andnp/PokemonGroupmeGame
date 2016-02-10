@@ -1,6 +1,6 @@
 global.DEBUG = false;
 global.time = .5; // in minutes
-global.waitTime = 15; // in seconds
+global.waitTime = 30; // in seconds
 
 
 if(process.argv[2] == "--debug"){ // if run with --debug, then run in terminal
